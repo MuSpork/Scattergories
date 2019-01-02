@@ -38,7 +38,7 @@ class ViewController: UIViewController {
 
     let number: String = "";
     
-    var textView = UITextView();
+    var letterTextView = UITextView();
     
     func randomizeAlphabet() -> String{
         let randomizerAlphabetNumber = Int.random(in: 0 ... alphabet.count-1);
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
     }
     
     func randomizeCategories() -> String {
-        let numberOfCategories = Int.random(in: 10 ... 13);
+        let numberOfCategories = 12; //Int.random(in: 10 ... 13);
         
         var numberisAvailable: [Bool] = [Bool](repeating: true, count: numberOfCategories);
         var categoriesToShow: [String] = [String](repeating: "", count: numberOfCategories);
@@ -57,7 +57,21 @@ class ViewController: UIViewController {
             if(numberisAvailable[n]==true){
                 let category = String(categories[categoryRandomizer]);
                 
+                let calculateY = Int(screenWidth/10 + screenHeight/2/2-screenHeight/16+5);
                 
+                let categoryTextView = UITextView(frame: CGRect(x: screenWidth/10,
+                                                                y: CGFloat(calculateY+(n*30)),
+                                                                width: screenWidth/2,
+                                                                height: screenHeight/20
+                    ));
+                    
+                categoryTextView.text = String(n+1) + ". " + category;
+                categoryTextView.layer.borderColor = UIColor.black.cgColor;
+                categoryTextView.layer.borderWidth = 3;
+                categoryTextView.isEditable = false;
+                categoryTextView.isSelectable = false;
+                
+                self.view.addSubview(categoryTextView);
                 
                 numberisAvailable[n]=false;
                 print(category);
@@ -75,6 +89,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(screenWidth)
+        print(screenHeight)
         
         randomizeCategories()
         
@@ -106,24 +123,24 @@ class ViewController: UIViewController {
         
         
         //Edit TextView for displaying the letter of the Alphabet
-        textView = UITextView(frame: CGRect(x:50,
-                                            y:50,
-                                            width: (screenWidth/2)-50,
-                                            height: ((screenHeight/2)/2)-80));
+        letterTextView = UITextView(frame: CGRect(x:screenWidth/10,
+                                            y:screenWidth/10,
+                                            width: (screenWidth/2)-(screenWidth/8),
+                                            height: ((screenHeight/2)/2)-screenHeight/16));//+(screenHeight/8)));
         
         self.automaticallyAdjustsScrollViewInsets = false;
-        textView.isEditable = false;
-        textView.isSelectable = false;
-        //textView.alignTextVerticallyInContainer()
+        letterTextView.isEditable = false;
+        letterTextView.isSelectable = false;
+        letterTextView.alignTextVerticallyInContainer()
         //textView.textAlignment = NSTextAlignment.justified;
-        textView.textColor = UIColor.black;
-        textView.textAlignment = NSTextAlignment.center;
-        textView.font = .systemFont(ofSize: 100);
-        textView.backgroundColor = UIColor.clear;
-        self.view.addSubview(textView);
-        textView.text =  randomizeAlphabet();
-        textView.layer.borderWidth = 3;
-        textView.layer.borderColor = UIColor.black.cgColor
+        letterTextView.textColor = UIColor.black;
+        letterTextView.textAlignment = NSTextAlignment.center;
+        letterTextView.font = .systemFont(ofSize: screenHeight/8);
+        letterTextView.backgroundColor = UIColor.clear;
+        self.view.addSubview(letterTextView);
+        letterTextView.text =  randomizeAlphabet();
+        letterTextView.layer.borderWidth = 3;
+        letterTextView.layer.borderColor = UIColor.black.cgColor
         
         //New Button for shuffling.
         let shuffleButton = UIButton()
@@ -152,7 +169,7 @@ class ViewController: UIViewController {
     }
     
     @objc func shuffleButtonClicked(_ sender:UIButton!){
-        textView.text = randomizeAlphabet();
+        letterTextView.text = randomizeAlphabet();
         randomizeCategories()
         
     }
