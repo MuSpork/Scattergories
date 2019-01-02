@@ -2,7 +2,7 @@
 //  ScattergoriesTests.swift
 //  ScattergoriesTests
 //
-//  Created by Mara Francesca Santos on 2/01/19.
+//  Created by MuSpork on 2/01/19.
 //  Copyright © 2019 Santos. All rights reserved.
 //
 
